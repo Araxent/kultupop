@@ -73,3 +73,42 @@ function nextQuestion() {
         alert("Fin du quiz !");
     }
 }
+
+
+function loadPlayerView() {
+    const pseudo = sessionStorage.getItem("pseudo");
+    document.getElementById("pseudoDisplay").innerText = pseudo || "joueur";
+
+    // Afficher la question actuelle depuis le localStorage (mise à jour dynamique)
+    const question = JSON.parse(localStorage.getItem("currentQuestion"));
+    const index = localStorage.getItem("questionIndex");
+
+    if (question) {
+        document.getElementById("currentQuestionTitle").innerText = "Question " + (parseInt(index) + 1);
+        document.getElementById("currentQuestionText").innerText = question.question;
+    } else {
+        document.getElementById("currentQuestionText").innerText = "En attente du lancement du quiz...";
+        document.getElementById("responseBox").style.display = "none";
+    }
+
+    // Score local (modifiable côté admin manuellement)
+    let score = localStorage.getItem("score_" + pseudo);
+    if (!score) score = 0;
+    document.getElementById("scoreDisplay").innerText = score;
+}
+
+function submitAnswer() {
+    const pseudo = sessionStorage.getItem("pseudo");
+    const answer = document.getElementById("playerAnswer").value.trim();
+
+    if (!answer) {
+        alert("Merci d'écrire une réponse avant de valider.");
+        return;
+    }
+
+    // Stockage local (ou on peut l'envoyer à une base plus tard)
+    localStorage.setItem("answer_" + pseudo + "_" + localStorage.getItem("questionIndex"), answer);
+
+    document.getElementById("confirmationMessage").innerText = "Réponse enregistrée !";
+    document.getElementById("playerAnswer").value = "";
+}
