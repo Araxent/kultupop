@@ -1,4 +1,6 @@
-// Fonction pour rejoindre le quiz en tant que joueur
+let currentQuestionIndex = 0;
+let quizData = [];
+
 function joinQuiz() {
     const pseudo = document.getElementById("pseudo").value.trim();
     if (pseudo) {
@@ -10,7 +12,6 @@ function joinQuiz() {
     }
 }
 
-// Fonction pour se connecter en tant qu'administrateur
 function adminLogin() {
     const password = document.getElementById("admin-pass").value;
     if (password === "admin123") {
@@ -19,5 +20,56 @@ function adminLogin() {
         window.location.href = "admin.html";
     } else {
         alert("Mot de passe incorrect.");
+    }
+}
+
+function loadPPTX() {
+    const fileInput = document.getElementById("pptxFile");
+    const file = fileInput.files[0];
+    if (!file) {
+        alert("Veuillez sélectionner un fichier PowerPoint (.pptx)");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = async function (e) {
+        const arrayBuffer = e.target.result;
+        const parser = new PPTXParser();
+        const result = await parser.parse(arrayBuffer);
+
+        quizData = result.slides
+            .slice(1)  // on ignore le titre
+            .map(slide => ({
+                question: slide.title || "Sans titre",
+                answer: slide.texts?.[0] || "Pas de réponse"
+            }));
+
+        if (quizData.length > 0) {
+            currentQuestionIndex = 0;
+            document.getElementById("quizControl").style.display = "block";
+            displayCurrentQuestion();
+        } else {
+            alert("Aucune question détectée.");
+        }
+    };
+    reader.readAsArrayBuffer(file);
+}
+
+function displayCurrentQuestion() {
+    const question = quizData[currentQuestionIndex];
+    document.getElementById("questionTitle").innerText = "Question " + (currentQuestionIndex + 1);
+    document.getElementById("questionText").innerText = question.question;
+
+    // On sauvegarde la question courante pour les joueurs
+    localStorage.setItem("currentQuestion", JSON.stringify(question));
+    localStorage.setItem("questionIndex", currentQuestionIndex);
+}
+
+function nextQuestion() {
+    if (currentQuestionIndex < quizData.length - 1) {
+        currentQuestionIndex++;
+        displayCurrentQuestion();
+    } else {
+        alert("Fin du quiz !");
     }
 }

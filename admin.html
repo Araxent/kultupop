@@ -2,27 +2,26 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Quiz - Admin</title>
+    <title>Interface Admin - KultuPop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Panel Administrateur</h1>
-        <p id="admin-name"></p>
-        <p>Interface à venir...</p>
-        <button onclick="logout()">Déconnexion</button>
+        <h1>Interface Administrateur</h1>
+        <p>Bienvenue, Admin</p>
+        
+        <input type="file" id="pptxFile" accept=".pptx">
+        <button onclick="loadPPTX()">Charger le quiz</button>
+        
+        <div id="quizControl" style="display:none; margin-top: 20px;">
+            <h2 id="questionTitle">Question 1</h2>
+            <p id="questionText"></p>
+            <button onclick="nextQuestion()">Question suivante</button>
+        </div>
+        
+        <a href="index.html">Déconnexion</a>
     </div>
-    <script>
-        const name = sessionStorage.getItem("pseudo");
-        if (!name || sessionStorage.getItem("isAdmin") !== "true") {
-            window.location.href = "index.html";
-        }
-        document.getElementById("admin-name").textContent = "Admin : " + name;
-
-        function logout() {
-            sessionStorage.clear();
-            window.location.href = "index.html";
-        }
-    </script>
+    <script src="https://cdn.jsdelivr.net/npm/pptx-parser@1.0.6/dist/pptx-parser.min.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
