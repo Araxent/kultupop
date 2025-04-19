@@ -2,22 +2,18 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Connexion au Quiz</title>
+    <title>KultuPop - Connexion</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Bienvenue sur KultuPop Quiz</h1>
-        <div class="login-box">
-            <h2>Connexion Joueur</h2>
-            <input type="text" id="pseudo" placeholder="Entrez votre pseudo">
-            <button onclick="joinQuiz()">Valider</button>
-        </div>
-        <div class="admin-box">
-            <h2>Connexion Admin</h2>
-            <input type="password" id="admin-pass" placeholder="Mot de passe admin">
-            <button onclick="adminLogin()">Se connecter</button>
-        </div>
+        <h1>Bienvenue sur KultuPop</h1>
+        <input type="text" id="pseudo" placeholder="Entrez votre pseudo">
+        <button onclick="joinQuiz()">Rejoindre le quiz</button>
+
+        <hr>
+        <input type="password" id="adminPassword" placeholder="Mot de passe admin">
+        <button onclick="loginAdmin()">Connexion admin</button>
     </div>
     <script src="script.js"></script>
 </body>

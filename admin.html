@@ -2,32 +2,29 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Interface Admin - KultuPop</title>
+    <title>Admin - KultuPop</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Interface Administrateur</h1>
-        <p>Bienvenue, Admin</p>
-        
-        <input type="file" id="pptxFile" accept=".pptx">
-        <button onclick="loadPPTX()">Charger le quiz</button>
-        
-        
+<div class="container">
+    <h1>Interface Admin</h1>
+    <input type="file" id="pptxFile" accept=".pptx">
+    <button onclick="handleFileUpload()">Charger le quiz</button>
+    
     <div id="quizControl" style="display:none; margin-top: 20px;">
+        <button onclick="startQuiz()">Lancer le quiz</button>
+        <button onclick="nextQuestion()">Question suivante</button>
+
         <h3>Réponses des joueurs :</h3>
         <div id="answersContainer"></div>
+
         <h3>Scores :</h3>
         <div id="scoresContainer"></div>
-    
-            <h2 id="questionTitle">Question 1</h2>
-            <p id="questionText"></p>
-            <button onclick="nextQuestion()">Question suivante</button>
-        </div>
-        
-        <a href="index.html">Déconnexion</a>
+        <button onclick="exportFinalScores()">Exporter les scores</button>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/pptx-parser@1.0.6/dist/pptx-parser.min.js"></script>
-    <script src="script.js"></script>
+
+    <a href="index.html">Déconnexion</a>
+</div>
+<script src="script.js"></script>
 </body>
 </html>
