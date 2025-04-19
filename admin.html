@@ -13,7 +13,13 @@
         <input type="file" id="pptxFile" accept=".pptx">
         <button onclick="loadPPTX()">Charger le quiz</button>
         
-        <div id="quizControl" style="display:none; margin-top: 20px;">
+        
+    <div id="quizControl" style="display:none; margin-top: 20px;">
+        <h3>Réponses des joueurs :</h3>
+        <div id="answersContainer"></div>
+        <h3>Scores :</h3>
+        <div id="scoresContainer"></div>
+    
             <h2 id="questionTitle">Question 1</h2>
             <p id="questionText"></p>
             <button onclick="nextQuestion()">Question suivante</button>

@@ -112,3 +112,67 @@ function submitAnswer() {
     document.getElementById("confirmationMessage").innerText = "Réponse enregistrée !";
     document.getElementById("playerAnswer").value = "";
 }
+
+
+function updateAnswersAndScores() {
+    const questionIndex = localStorage.getItem("questionIndex");
+    const answersDiv = document.getElementById("answersContainer");
+    const scoresDiv = document.getElementById("scoresContainer");
+
+    answersDiv.innerHTML = "";
+    scoresDiv.innerHTML = "";
+
+    // Liste des pseudos simulée depuis localStorage
+    const allKeys = Object.keys(localStorage);
+    const pseudos = [...new Set(allKeys.filter(k => k.startsWith("answer_")).map(k => k.split("_")[1]))];
+
+    pseudos.forEach(pseudo => {
+        const answerKey = "answer_" + pseudo + "_" + questionIndex;
+        const answer = localStorage.getItem(answerKey) || "(aucune réponse)";
+        const scoreKey = "score_" + pseudo;
+        let score = parseInt(localStorage.getItem(scoreKey) || "0");
+
+        const ansBox = document.createElement("div");
+        ansBox.innerHTML = `<strong>${pseudo}</strong> : ${answer}`;
+        answersDiv.appendChild(ansBox);
+
+        const scoreBox = document.createElement("div");
+        scoreBox.innerHTML = `${pseudo} — Score : <span id="score-${pseudo}">${score}</span>
+            <button onclick="adjustScore('${pseudo}', 1)">+1</button>
+            <button onclick="adjustScore('${pseudo}', -1)">-1</button>`;
+        scoresDiv.appendChild(scoreBox);
+    });
+}
+
+function adjustScore(pseudo, delta) {
+    const key = "score_" + pseudo;
+    let score = parseInt(localStorage.getItem(key) || "0");
+    score += delta;
+    localStorage.setItem(key, score);
+    document.getElementById("score-" + pseudo).innerText = score;
+}
+
+function exportFinalScores() {
+    const allKeys = Object.keys(localStorage);
+    const pseudos = [...new Set(allKeys.filter(k => k.startsWith("score_")).map(k => k.replace("score_", "")))];
+
+    let csv = "Pseudo,Score\n";
+    pseudos.forEach(pseudo => {
+        const score = localStorage.getItem("score_" + pseudo);
+        csv += `${pseudo},${score}\n`;
+    });
+
+    const blob = new Blob([csv], { type: "text/csv" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "scores_kultupop.csv";
+    link.click();
+}
+
+window.onload = function () {
+    if (sessionStorage.getItem("isAdmin") === "true") {
+        setInterval(updateAnswersAndScores, 3000);
+    } else if (sessionStorage.getItem("isAdmin") === "false") {
+        loadPlayerView();
+    }
+};
