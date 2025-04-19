@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - KultuPop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Interface Admin</h1>
+    <input type="file" id="pptxFile" accept=".pptx">
+    <button onclick="handleFileUpload()">Charger le quiz</button>
+    
+    <div id="quizControl" style="display:none; margin-top: 20px;">
+        <button onclick="startQuiz()">Lancer le quiz</button>
+        <button onclick="nextQuestion()">Question suivante</button>
+
+        <h3>Réponses des joueurs :</h3>
+        <div id="answersContainer"></div>
+
+        <h3>Scores :</h3>
+        <div id="scoresContainer"></div>
+        <button onclick="exportFinalScores()">Exporter les scores</button>
+    </div>
+
+    <a href="index.html">Déconnexion</a>
+</div>
+
+<!-- Ajout de JSZip -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
