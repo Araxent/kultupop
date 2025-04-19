@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>KultuPop - Admin</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Administration du Quiz</h1>
+
+    <h3>Charger un fichier PowerPoint (.pptx)</h3>
+    <input type="file" id="pptxFile" accept=".pptx">
+    <button onclick="handleFileUpload()">Charger le quiz</button>
+
+    <div id="quizControl" style="display:none;">
+        <hr>
+        <h3>Contrôle du Quiz</h3>
+        <button onclick="startQuiz()">Lancer le quiz</button>
+        <button onclick="nextQuestion()">Question suivante</button>
+        <button onclick="exportFinalScores()">Exporter les scores</button>
+    </div>
+
+    <a href="index.html">Déconnexion</a>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>
